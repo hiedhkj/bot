@@ -2,4 +2,3 @@
 import discord
 import random
 #are
-fdgfdgdfgfdg
