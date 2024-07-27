@@ -1,4 +1,4 @@
 # coming soon...
-import discord
-import random
+import discord hhhhh
+jjjjj
 #are
