@@ -1,2 +1,2 @@
 # coming soon...
-import discord 6756757
+import discord
