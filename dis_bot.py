@@ -1,5 +1,1 @@
-# coming soon...
-import discord
-
-
-fdhgdghdfhg 34343434
+print('kos khar ali.h1')
