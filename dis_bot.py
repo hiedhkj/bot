@@ -12,6 +12,7 @@ async def slash_command(interaction: discord.Interaction):
 
 
 dghdghrfdrg
+hdfgbhjdtgkjdfjih
 @bot.event
 async def on_ready():
     await bot.tree.sync(guild=discord.Object(id=1266707957467451482))
