@@ -14,5 +14,5 @@ async def on_ready():
 async def slash_command(interaction: discord.Interaction):
 
     await interaction.response.send_message("Pong!")
-
+قبیفلقفل
 bot.run('')
