@@ -16,4 +16,3 @@ async def on_ready():
     print(f'{bot.user}')
 
 bot.run('')
-vhmjvbnj
