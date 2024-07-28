@@ -10,6 +10,8 @@ async def slash_command(interaction: discord.Interaction):
 
     await interaction.response.send_message("Pong!")
 
+
+dghdghrfdrg
 @bot.event
 async def on_ready():
     await bot.tree.sync(guild=discord.Object(id=1266707957467451482))
