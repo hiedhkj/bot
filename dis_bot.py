@@ -35,6 +35,11 @@ async def help(interaction: discord.Interaction):
 async def slash_command(interaction: discord.Interaction):
     await interaction.response.send_message(f"Pong! Latency: {round(bot.latency * 1000)} ms")# پینگ باتو روند میکنه اعشاری نشون نمیده
 
+@bot.tree.command(name="avatar" , description="Get users avatar." , guild = discord.Object(id=1266707957467451482))
+async def avatar(interaction: discord.Interaction , member: discord.Member):
+    user = bot.get_user(member)
+    await interaction.response.send_message(f"{user.avatar_url}")
+
 @bot.tree.command(name="kick" , description="Kick a Member." , guild = discord.Object(id=1266707957467451482))
 async def kick(interaction: discord.Interaction , member : discord.Member):
     if interaction.user.guild_permissions.kick_members:
