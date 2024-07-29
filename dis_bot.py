@@ -18,6 +18,12 @@ async def on_ready():
 
 #===Commands===>
 
+@bot.tree.command(name="help" , description="Get Info and Help." , guild=discord.Object(id=1266707957467451482))
+async def help(interaction: discord.Interaction):
+    embed = discord.Embed(title=":white_check_mark: Commands:" , description="Help - Ping - Kick" , color = discord.Color.blue())
+    embed.set_footer(text="Developers : .sirod. and pedart_mord")
+    await interaction.response.send_message(embed = embed)
+
 @bot.tree.command(name="ping" , description="Check the bot speed" , guild = discord.Object(id=1266707957467451482))
 async def slash_command(interaction: discord.Interaction):
     await interaction.response.send_message(f"Pong! Latency: {round(bot.latency * 1000)} ms")# پینگ باتو روند میکنه اعشاری نشون نمیده
