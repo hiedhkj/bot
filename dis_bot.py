@@ -37,8 +37,8 @@ async def slash_command(interaction: discord.Interaction):
 
 @bot.tree.command(name="avatar" , description="Get users avatar." , guild = discord.Object(id=1266707957467451482))
 async def avatar(interaction: discord.Interaction , member: discord.Member):
-    user = bot.get_user(member)
-    await interaction.response.send_message(f"{user.avatar_url}")
+    url = member.avatar.url
+    await interaction.response.send_message(url)
 
 @bot.tree.command(name="kick" , description="Kick a Member." , guild = discord.Object(id=1266707957467451482))
 async def kick(interaction: discord.Interaction , member : discord.Member):
