@@ -41,12 +41,12 @@ async def avatar(interaction: discord.Interaction , member: discord.Member):
     await interaction.response.send_message(url)
 #-=-Kick-=->
 @bot.tree.command(name="kick" , description="Kick a Member." , guild = discord.Object(id=1266707957467451482))
-async def kick(interaction: discord.Interaction , member : discord.Member):
+async def kick(interaction: discord.Interaction , member : discord.Member , reason):
     if interaction.user.guild_permissions.kick_members:
         if member.top_role < interaction.user.top_role:
             if member:
-                await member.kick(reason="You have been banned.")
-                embed = discord.Embed(title=":white_check_mark: Kicked!", description=f"{member.name} Kicked by {interaction.user}" , color = discord.Color.green())
+                await member.kick(reason="You have been kicked.")
+                embed = discord.Embed(title=":white_check_mark: Kicked!", description=f"{member.name} Kicked by {interaction.user} | reason : {reason}" , color = discord.Color.green())
                 await interaction.response.send_message(embed=embed)
             else:
                 embed = discord.Embed(title="❌ Error!" , color = discord.Color.red())
@@ -56,6 +56,24 @@ async def kick(interaction: discord.Interaction , member : discord.Member):
             await interaction.response.send_message(embed = embed)
     else:
         embed = discord.Embed(title="❌ You Can't Kick Members!" , description="You have not permissions" , color = discord.Color.red())
+        await interaction.response.send_message(embed = embed)
+#-=-Ban-=->
+@bot.tree.command(name="ban" , description="Ban a Member." , guild = discord.Object(id=1266707957467451482))
+async def ban(interaction: discord.Interaction , member : discord.Member , reason):
+    if interaction.user.guild_permissions.ban_members:
+        if member.top_role < interaction.user.top_role:
+            if member:
+                await member.ban(reason="You have been banned.")
+                embed = discord.Embed(title=":white_check_mark: Baned!", description=f"{member.name} Baned by {interaction.user} | reason : {reason}" , color = discord.Color.green())
+                await interaction.response.send_message(embed=embed)
+            else:
+                embed = discord.Embed(title="❌ Error!" , color = discord.Color.red())
+                await interaction.response.send_message(embed = embed)
+        else:
+            embed = discord.Embed(title=f"❌ You Can't Ban {member.name}" , description="Your Role Is Low" , color = discord.Color.red())
+            await interaction.response.send_message(embed = embed)
+    else:
+        embed = discord.Embed(title="❌ You Can't Ban Members!" , description="You have not permissions" , color = discord.Color.red())
         await interaction.response.send_message(embed = embed)
 
 #===Run===>
