@@ -12,7 +12,6 @@ async def on_ready():
 
 @bot.tree.command(name="ping" , description="Check the bot speed" , guild = discord.Object(id=1266707957467451482))
 async def slash_command(interaction: discord.Interaction):
-
-    await interaction.response.send_message("Pong!")
+    await interaction.response.send_message(f"Pong! Latency: {round(bot.latency * 1000)} ms")# پینگ باتو روند میکنه اعشاری نشون نمیده
 
 bot.run('')
