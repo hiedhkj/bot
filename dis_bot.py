@@ -33,7 +33,7 @@ async def help(interaction: discord.Interaction):
 #-=-Ping-=->
 @bot.tree.command(name="ping" , description="Check the bot speed" , guild = discord.Object(id=1266707957467451482))
 async def slash_command(interaction: discord.Interaction):
-    embed = discord.Embed(title="***:white_check_mark: Pong!***" , description=f"Latency: {round(bot.latency * 1000)} ms!" , color=discord.Color.blue())
+    embed = discord.Embed(title=":white_check_mark: Pong!" , description=f"Latency: {round(bot.latency * 1000)} ms!" , color=discord.Color.blue())
     await interaction.response.send_message(embed = embed)
 #-=-Avatar-=->
 @bot.tree.command(name="avatar" , description="Get users avatar." , guild = discord.Object(id=1266707957467451482))
