@@ -24,22 +24,22 @@ async def on_ready():
     print(f'{bot.user}')
 
 #===Commands===>
-
+#-=-Help-=->
 @bot.tree.command(name="help" , description="Get Info and Help." , guild=discord.Object(id=1266707957467451482))
 async def help(interaction: discord.Interaction):
     embed = discord.Embed(title=":white_check_mark: Commands:" , description="Help - Ping - Kick" , color = discord.Color.blue())
     embed.set_footer(text="Developers : .sirod. and pedart_mord")
     await interaction.response.send_message(embed = embed)
-
+#-=-Ping-=->
 @bot.tree.command(name="ping" , description="Check the bot speed" , guild = discord.Object(id=1266707957467451482))
 async def slash_command(interaction: discord.Interaction):
     await interaction.response.send_message(f"Pong! Latency: {round(bot.latency * 1000)} ms")# پینگ باتو روند میکنه اعشاری نشون نمیده
-
+#-=-Avatar-=->
 @bot.tree.command(name="avatar" , description="Get users avatar." , guild = discord.Object(id=1266707957467451482))
 async def avatar(interaction: discord.Interaction , member: discord.Member):
     url = member.avatar.url
     await interaction.response.send_message(url)
-
+#-=-Kick-=->
 @bot.tree.command(name="kick" , description="Kick a Member." , guild = discord.Object(id=1266707957467451482))
 async def kick(interaction: discord.Interaction , member : discord.Member):
     if interaction.user.guild_permissions.kick_members:
@@ -58,4 +58,5 @@ async def kick(interaction: discord.Interaction , member : discord.Member):
         embed = discord.Embed(title="❌ You Can't Kick Members!" , description="You have not permissions" , color = discord.Color.red())
         await interaction.response.send_message(embed = embed)
 
+#===Run===>
 bot.run('')
