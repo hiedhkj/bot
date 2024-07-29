@@ -2,17 +2,24 @@
 
 import discord
 from discord.ext import commands
+from discord.ext import commands, tasks 
 
-#===نمیدونم اینجا چیه===>
+#===create bot & permission bot===>
 
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix='~', intents=intents)
 intents.messages = True
 
 #===Login===>
+@tasks.loop(minutes=5)  # این تسک هر پنج دقیق ران میشه و اکتیوتی جدید میزاره
+async def update_activity():
+    guild_count = len(bot.guilds)
+    activity = discord.Activity(type=discord.ActivityType.watching, name=f"{guild_count} servers")
+    await bot.change_presence(activity=activity)
 
 @bot.event
 async def on_ready():
+    update_activity.start() # تسک اجرا میشه
     await bot.tree.sync(guild=discord.Object(id=1266707957467451482))
     print(f'{bot.user}')
 
