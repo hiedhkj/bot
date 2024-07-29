@@ -75,6 +75,21 @@ async def ban(interaction: discord.Interaction , member : discord.Member):
     else:
         embed = discord.Embed(title="❌ You Can't Ban Members!" , description="You have not permissions" , color = discord.Color.red())
         await interaction.response.send_message(embed = embed)
+#-=-Unban-=->
+@bot.tree.command(name="unban" , description="Unban a Member." , guild = discord.Object(id=1266707957467451482))
+async def ban(interaction: discord.Interaction , id : str):
+    if interaction.user.guild_permissions.ban_members:
+        async for ban_entry in interaction.guild.bans():
+            user = ban_entry.user
+
+            if user.id == int(id):
+                await interaction.guild.unban(user , reason="unbaned" )
+                embed = discord.Embed(title=":white_check_mark: Unbaned!", description=f"{user.name} Unaned by {interaction.user}" , color = discord.Color.green())
+                await interaction.response.send_message(embed=embed)
+        else:
+            await interaction.response.send_message("❌ Member not found in the ban list.")
+    else:
+        await interaction.response.send_message("❌ You do not have permission")
 
 #===Run===>
 bot.run('')
