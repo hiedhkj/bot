@@ -111,5 +111,35 @@ async def ban(interaction: discord.Interaction , id : str):
     else:
         await interaction.response.send_message("❌ You do not have permission")
 
+#===Ticket===>
+async def b_e_callback(interaction: discord.Interaction):
+    category_id = 1266707957467451483 
+    category = interaction.guild.get_channel(category_id)
+    if category:
+        channel = await interaction.guild.create_text_channel(
+            name=f'ticket-{interaction.user.name}',
+            category=category,
+        )
+        await interaction.response.send_message(f'Your ticket has been created in {channel.mention}', ephemeral=True)
+    else:
+        await interaction.response.send_message('Category not found.', ephemeral=True)
+
+@bot.tree.command(name="ticket", description="Create a ticket platform.", guild=g)
+async def Ticket(interaction: discord.Interaction):
+    embed_t = discord.Embed(
+        title="Click on the button to make a ticket :white_check_mark:",
+        description="**`1 - Do not disturb `**:x:\n**`2 - Do not spam    `**:x:\n**`3 - do not mention `**:x:",
+        color=discord.Color.blue()
+    )
+    embed_t.set_image(url="https://media.discordapp.net/attachments/1266707957467451485/1267957535869112352/ticket-15-16330.png?ex=66aaacfa&is=66a95b7a&hm=9bd671a08024e853908ca9e5b7663a385d516f268921aff5a2a72b2054f28b83&=&format=webp&quality=lossless")
+    embed_t.set_footer(text="jimi team", icon_url="https://images-ext-1.discordapp.net/external/QGxX2l_m03nfw28FarkniIlMQ5riVt8h5wqJ0kmBhAo/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/1266704692650446930/0d12eb3e3807c2ddf9518a9b27e9b7ca.png?format=webp&quality=lossless&width=417&height=417")
+
+    b_e = Button(label="Create Ticket", style=discord.ButtonStyle.green)
+    b_e.callback = b_e_callback
+
+    view = View()
+    view.add_item(b_e)
+    await interaction.response.send_message(embed=embed_t, view=view)
+
 #===Run===>
 bot.run('')
