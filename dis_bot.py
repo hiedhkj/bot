@@ -25,25 +25,31 @@ async def on_ready():
     await bot.tree.sync(guild=discord.Object(id=1266707957467451482))
     print(f'{bot.user}')
 
+#===>
+g = discord.Object(id=1266707957467451482)
+#===>
+
 #===Commands===>
 #-=-Help-=->
-@bot.tree.command(name="help" , description="Get Info and Help." , guild=discord.Object(id=1266707957467451482))
+@bot.tree.command(name="help" , description="Get Info and Help." , guild = g)
 async def help(interaction: discord.Interaction):
     embed = discord.Embed(title=":white_check_mark: Commands:" , description="Help - Ping - Kick" , color = discord.Color.blue())
     embed.set_footer(text="Developers : .sirod. and pedart_mord")
     await interaction.response.send_message(embed = embed)
 #-=-Ping-=->
-@bot.tree.command(name="ping" , description="Check the bot speed" , guild = discord.Object(id=1266707957467451482))
+@bot.tree.command(name="ping" , description="Check the bot speed" , guild = g)
 async def slash_command(interaction: discord.Interaction):
     embed = discord.Embed(title=":white_check_mark: Pong!" , description=f"Latency: {round(bot.latency * 1000)} ms!" , color=discord.Color.blue())
     await interaction.response.send_message(embed = embed)
 #-=-Avatar-=->
-@bot.tree.command(name="avatar" , description="Get users avatar." , guild = discord.Object(id=1266707957467451482))
+@bot.tree.command(name="avatar" , description="Get users avatar." , guild = g)
 async def avatar(interaction: discord.Interaction , member: discord.Member):
     url = member.avatar.url
     await interaction.response.send_message(url)
+#-=-Clear-=->
+@bot.tree.command(name="clear" , description="Clear Messages." , guild = g)
 #-=-Kick-=->
-@bot.tree.command(name="kick" , description="Kick a Member." , guild = discord.Object(id=1266707957467451482))
+@bot.tree.command(name="kick" , description="Kick a Member." , guild = g)
 async def kick(interaction: discord.Interaction , member : discord.Member):
     if interaction.user.guild_permissions.kick_members:
         if member.top_role < interaction.user.top_role:
@@ -61,7 +67,7 @@ async def kick(interaction: discord.Interaction , member : discord.Member):
         embed = discord.Embed(title="❌ You Can't Kick Members!" , description="You have not permissions" , color = discord.Color.red())
         await interaction.response.send_message(embed = embed)
 #-=-Ban-=->
-@bot.tree.command(name="ban" , description="Ban a Member." , guild = discord.Object(id=1266707957467451482))
+@bot.tree.command(name="ban" , description="Ban a Member." , guild = g)
 async def ban(interaction: discord.Interaction , member : discord.Member):
     if interaction.user.guild_permissions.ban_members:
         if member.top_role < interaction.user.top_role:
@@ -79,7 +85,7 @@ async def ban(interaction: discord.Interaction , member : discord.Member):
         embed = discord.Embed(title="❌ You Can't Ban Members!" , description="You have not permissions" , color = discord.Color.red())
         await interaction.response.send_message(embed = embed)
 #-=-Unban-=->
-@bot.tree.command(name="unban" , description="Unban a Member." , guild = discord.Object(id=1266707957467451482))
+@bot.tree.command(name="unban" , description="Unban a Member." , guild = g)
 async def ban(interaction: discord.Interaction , id : str):
     if interaction.user.guild_permissions.ban_members:
         async for ban_entry in interaction.guild.bans():
@@ -96,7 +102,7 @@ async def ban(interaction: discord.Interaction , id : str):
 
 #===Quis===>
 
-@bot.tree.command(name="quiz" , description="Start Quiz Game." , guild = discord.Object(id=1266707957467451482))
+@bot.tree.command(name="quiz" , description="Start Quiz Game." , guild = g)
 async def quiz(interaction: discord.Interaction):
 
     btn1 = Button(label="1" , style=discord.ButtonStyle.gray)
