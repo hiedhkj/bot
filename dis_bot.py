@@ -48,6 +48,13 @@ async def avatar(interaction: discord.Interaction , member: discord.Member):
     await interaction.response.send_message(url)
 #-=-Clear-=->
 @bot.tree.command(name="clear" , description="Clear Messages." , guild = g)
+async def clear(interaction: discord.Interaction , number_of_message: int):
+    if number_of_message == None:
+        await interaction.channel.purge(limit=3)
+    else:
+        embed = discord.Embed(title=f':white_check_mark: Clearing {number_of_message} Message' , color = discord.Color.green())
+        await interaction.response.send_message(embed = embed)
+        await interaction.channel.purge(limit=number_of_message)
 #-=-Kick-=->
 @bot.tree.command(name="kick" , description="Kick a Member." , guild = g)
 async def kick(interaction: discord.Interaction , member : discord.Member):
