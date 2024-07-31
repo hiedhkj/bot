@@ -46,6 +46,11 @@ async def slash_command(interaction: discord.Interaction):
 async def avatar(interaction: discord.Interaction , member: discord.Member):
     url = member.avatar.url
     await interaction.response.send_message(url)
+#-=-Banner-=->
+@bot.tree.command(name="banner" , description="Get Users Banner." , guild = g)
+async def banner(interaction: discord.Interaction , member: discord.Member):
+    burl = member.banner.url
+    await interaction.response.send_message(burl)
 #-=-Clear-=->
 @bot.tree.command(name="clear" , description="Clear Messages." , guild = g)
 async def clear(interaction: discord.Interaction , number_of_message: int):
