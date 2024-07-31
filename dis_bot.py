@@ -91,7 +91,7 @@ async def addrole(interaction: discord.Interaction , member : discord.Member , r
     if interaction.user.guild_permissions.manage_roles:
         if member.top_role < interaction.user.top_role:
             if member:
-                await member.add_roles(roles=role)
+                await member.add_roles(role)
                 embed = discord.Embed(title=f":white_check_mark: {role.name} Added To {member.name}" , color = discord.Color.green())
                 await interaction.response.send_message(embed = embed)
             else:
