@@ -73,7 +73,7 @@ async def timeout(interaction: discord.Interaction , member : discord.Member):
     if interaction.user.guild_permissions.mute_members:
         if member.top_role < interaction.user.top_role:
             if member:
-                await member.timeout(reason="You have been timeouted.")
+                await member.timeout(reason="You have been timeouted." , until="7d")
                 embed = discord.Embed(title=":white_check_mark: Timeouted!" , description=f"{member.name} Timeouted By {interaction.user}" , color = discord.Color.green())
                 await interaction.response.send_message(embed = embed)
             else:
@@ -92,7 +92,7 @@ async def addrole(interaction: discord.Interaction , member : discord.Member , r
         if member.top_role < interaction.user.top_role:
             if member:
                 await member.add_roles(role)
-                embed = discord.Embed(title=f":white_check_mark: {role.name} Added To {member.name}" , color = discord.Color.green())
+                embed = discord.Embed(title=f":white_check_mark: @{role.name} Added To {member.name}" , color = discord.Color.green())
                 await interaction.response.send_message(embed = embed)
             else:
                 embed = discord.Embed(title=":x: Error!" , color = discord.Color.red())
@@ -102,6 +102,24 @@ async def addrole(interaction: discord.Interaction , member : discord.Member , r
             await interaction.response.send_message(embed = embed)
     else:
         embed = discord.Embed(title=":x: You can't give role to members." , color = discord.Color.red())
+        await interaction.response.send_message(embed = embed)
+#-=-Remove Role-=->
+@bot.tree.command(name="remove-role" , description="Remove role to members." , guild = g)
+async def removerole(interaction: discord.Interaction , member : discord.Member , role : discord.Role):
+    if interaction.user.guild_permissions.manage_roles:
+        if member.top_role < interaction.user.top_role:
+            if member:
+                await member.remove_roles(role)
+                embed = discord.Embed(title=f":white_check_mark: @{role.name} Removed from {member.name}." , color = discord.Color.green())
+                await interaction.response.send_message(embed = embed)
+            else:
+                embed = discord.Embed(title=":x: Error!" , color = discord.Color.red())
+                await interaction.response.send_message(embed = embed)
+        else:
+            embed = discord.Embed(title=":x: Your role is low." , color = discord.Color.red())
+            await interaction.response.send_message(embed = embed)
+    else:
+        embed = discord.Embed(title=":x: You can't remove role from members." , color = discord.Color.red())
         await interaction.response.send_message(embed = embed)
 #-=-Kick-=->
 @bot.tree.command(name="kick" , description="Kick a Member." , guild = g)
