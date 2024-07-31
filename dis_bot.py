@@ -85,6 +85,24 @@ async def timeout(interaction: discord.Interaction , member : discord.Member):
     else:
         embed = discord.Embed(title=":x: You can't timeout members." , color = discord.Color.red())
         await interaction.response.send_message(embed = embed)
+#-=-Add Role-=->
+@bot.tree.command(name="add-role" , description="Add role to members." , guild = g)
+async def addrole(interaction: discord.Interaction , member : discord.Member , role : discord.Role):
+    if interaction.user.guild_permissions.manage_roles:
+        if member.top_role < interaction.user.top_role:
+            if member:
+                await member.add_roles(roles=role)
+                embed = discord.Embed(title=f":white_check_mark: {role.name} Added To {member.name}" , color = discord.Color.green())
+                await interaction.response.send_message(embed = embed)
+            else:
+                embed = discord.Embed(title=":x: Error!" , color = discord.Color.red())
+                await interaction.response.send_message(embed = embed)
+        else:
+            embed = discord.Embed(title=":x: Your role is low." , color = discord.Color.red())
+            await interaction.response.send_message(embed = embed)
+    else:
+        embed = discord.Embed(title=":x: You can't give role to members." , color = discord.Color.red())
+        await interaction.response.send_message(embed = embed)
 #-=-Kick-=->
 @bot.tree.command(name="kick" , description="Kick a Member." , guild = g)
 async def kick(interaction: discord.Interaction , member : discord.Member):
