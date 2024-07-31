@@ -67,6 +67,24 @@ async def clear(interaction: discord.Interaction , number_of_message: int):
     else:
         embed = discord.Embed(title=":x: You Can't Clear Messages.")
         await interaction.response.send_message(embed = embed)
+#-=-Timeout-=->
+@bot.tree.command(name="timeout" , description="Timeout Members." , guild = g)
+async def timeout(interaction: discord.Interaction , member : discord.Member):
+    if interaction.user.guild_permissions.mute_members:
+        if member.top_role < interaction.user.top_role:
+            if member:
+                await member.timeout(reason="You have been timeouted.")
+                embed = discord.Embed(title=":white_check_mark: Timeouted!" , description=f"{member.name} Timeouted By {interaction.user}" , color = discord.Color.green())
+                await interaction.response.send_message(embed = embed)
+            else:
+                embed = discord.Embed(title=":x: Error" , color = discord.Color.red())
+                await interaction.response.send_message(embed = embed)
+        else:
+            embed = discord.Embed(title=":x: Your role is low." , color = discord.Color.red())
+            await interaction.response.send_message(embed = embed)
+    else:
+        embed = discord.Embed(title=":x: You can't timeout members." , color = discord.Color.red())
+        await interaction.response.send_message(embed = embed)
 #-=-Kick-=->
 @bot.tree.command(name="kick" , description="Kick a Member." , guild = g)
 async def kick(interaction: discord.Interaction , member : discord.Member):
