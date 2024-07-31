@@ -117,12 +117,23 @@ async def ban(interaction: discord.Interaction , id : str):
         await interaction.response.send_message("❌ You do not have permission")
 #-=-Ticket-=->
 async def b_e_callback(interaction: discord.Interaction):
+    # پیدا کردن رول
+    role_name = "Support Team"
+    role = discord.utils.get(interaction.guild.roles, name=role_name)
+    # پیدا کردن کتگوری
     category_id = 1266707957467451483 
     category = interaction.guild.get_channel(category_id)
     if category:
+        #پرمیشن هایی کهداخل چنل قرار میگیره
+        over = {
+            interaction.guild.default_role: discord.PermissionOverwrite(read_messages=False), 
+            interaction.user: discord.PermissionOverwrite(read_messages=True),
+            role: discord.PermissionOverwrite(read_messages=True)}
+        # ساخت چنل
         channel = await interaction.guild.create_text_channel(
             name=f'ticket-{interaction.user.name}',
             category=category,
+            overwrites=over
         )
         await interaction.response.send_message(f'*Your ticket has been created in {channel.mention}*', ephemeral=True)
     else:
@@ -130,23 +141,20 @@ async def b_e_callback(interaction: discord.Interaction):
 
 @bot.tree.command(name="ticket", description="Create a ticket platform.", guild=g)
 async def Ticket(interaction: discord.Interaction):
-    if interaction.user.guild_permissions.administrator:
-        embed_t = discord.Embed(
-            title="Click on the button to make a ticket :white_check_mark:",
-            description="**`1 - Do not disturb `**:x:\n**`2 - Do not spam    `**:x:\n**`3 - do not mention `**:x:",
-            color=discord.Color.blue()
-        )
-        embed_t.set_image(url="https://media.lordicon.com/icons/wired/outline/759-ticket-coupon.gif")
-        embed_t.set_footer(text="J i M i Team", icon_url="https://images-ext-1.discordapp.net/external/QGxX2l_m03nfw28FarkniIlMQ5riVt8h5wqJ0kmBhAo/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/1266704692650446930/0d12eb3e3807c2ddf9518a9b27e9b7ca.png?format=webp&quality=lossless&width=417&height=417")
+    embed_t = discord.Embed(
+        title="Click on the button to make a ticket :white_check_mark:",
+        description="**`1 - Do not disturb `**:x:\n**`2 - Do not spam    `**:x:\n**`3 - do not mention `**:x:",
+        color=discord.Color.blue()
+    )
+    embed_t.set_image(url="https://media.lordicon.com/icons/wired/outline/759-ticket-coupon.gif")
+    embed_t.set_footer(text="J i M i Team", icon_url="https://images-ext-1.discordapp.net/external/QGxX2l_m03nfw28FarkniIlMQ5riVt8h5wqJ0kmBhAo/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/1266704692650446930/0d12eb3e3807c2ddf9518a9b27e9b7ca.png?format=webp&quality=lossless&width=417&height=417")
 
-        b_e = Button(label="Create Ticket", style=discord.ButtonStyle.blurple)
-        b_e.callback = b_e_callback
+    b_e = Button(label="Create Ticket", style=discord.ButtonStyle.blurple)
+    b_e.callback = b_e_callback
 
-        view = View()
-        view.add_item(b_e)
-        await interaction.response.send_message(embed=embed_t, view=view)
-    else:
-        interaction.response.send_message(":x: You are not authorized to use this command (No Permission)" , ephemeral = True)
+    view = View()
+    view.add_item(b_e)
+    await interaction.response.send_message(embed=embed_t, view=view)
 
 #===Run===>
 bot.run('')
