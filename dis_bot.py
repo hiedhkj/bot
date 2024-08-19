@@ -5,6 +5,8 @@ import random
 from discord.ext import commands
 from discord.ext import commands, tasks 
 from discord.ui import Button , View
+from datetime import datetime, timedelta, timezone
+import re
 
 #===create bot & permission bot===>
 
@@ -68,23 +70,33 @@ async def clear(interaction: discord.Interaction , number_of_message: int):
         embed = discord.Embed(title=":x: You Can't Clear Messages.")
         await interaction.response.send_message(embed = embed)
 #-=-Timeout-=->
-@bot.tree.command(name="timeout" , description="Timeout Members." , guild = g)
-async def timeout(interaction: discord.Interaction , member : discord.Member):
-    if interaction.user.guild_permissions.mute_members:
-        if member.top_role < interaction.user.top_role:
-            if member:
-                await member.timeout(reason="You have been timeouted." , until="7d")
-                embed = discord.Embed(title=":white_check_mark: Timeouted!" , description=f"{member.name} Timeouted By {interaction.user}" , color = discord.Color.green())
-                await interaction.response.send_message(embed = embed)
-            else:
-                embed = discord.Embed(title=":x: Error" , color = discord.Color.red())
-                await interaction.response.send_message(embed = embed)
-        else:
-            embed = discord.Embed(title=":x: Your role is low." , color = discord.Color.red())
-            await interaction.response.send_message(embed = embed)
-    else:
-        embed = discord.Embed(title=":x: You can't timeout members." , color = discord.Color.red())
-        await interaction.response.send_message(embed = embed)
+@bot.tree.command(name="timeout", description="Timeout Members with custom duration.", guild=g)
+async def timeout(interaction: discord.Interaction, member: discord.Member, duration: str):
+    if not interaction.user.guild_permissions.mute_members:
+        embed = discord.Embed(title=":x: You can't timeout members.", color=discord.Color.red())
+        await interaction.response.send_message(embed=embed)
+        return
+
+    if member is None or interaction.user.top_role <= member.top_role:
+        embed = discord.Embed(title=":x: Your role is too low or member is invalid.", color=discord.Color.red())
+        await interaction.response.send_message(embed=embed)
+        return
+
+    match = re.match(r"(\d+)([dhm])", duration)
+    if not match:
+        embed = discord.Embed(title=":x: Invalid duration format. Use 'd' for days, 'h' for hours, or 'm' for minutes.", color=discord.Color.red())
+        await interaction.response.send_message(embed=embed)
+        return
+
+    value, unit = int(match.group(1)), match.group(2)
+    if unit == 'd': timeout_duration = timedelta(days=value)
+    elif unit == 'h': timeout_duration = timedelta(hours=value)
+    elif unit == 'm': timeout_duration = timedelta(minutes=value)
+
+    until_time = datetime.now(timezone.utc) + timeout_duration
+    await member.timeout(until_time, reason="You have been timeouted.")
+    embed = discord.Embed(title=":white_check_mark: Timeouted!", description=f"{member.name} has been timeouted for {duration} by {interaction.user}", color=discord.Color.green())
+    await interaction.response.send_message(embed=embed)
 #-=-Add Role-=->
 @bot.tree.command(name="add-role" , description="Add role to members." , guild = g)
 async def addrole(interaction: discord.Interaction , member : discord.Member , role : discord.Role):
